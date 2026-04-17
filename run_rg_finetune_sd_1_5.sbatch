@@ -14,7 +14,7 @@
 set -euo pipefail
 
 SILO_ROOT="/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/SILO"
-mkdir -p "$SILO_ROOT/logs"
+# mkdir -p "$SILO_ROOT/logs"
 
 module purge
 module load python/3.11

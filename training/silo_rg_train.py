@@ -48,7 +48,7 @@ def parse_args():
         "--pretrained_model_name_or_path",
         type=str,
         # "botp/stable-diffusion-v1-5" or "stablediffusionapi/realistic-vision-v51" ,
-        default="/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/stable_diffusion_1_5_model",
+        default="/lustre/fswork/projects/rech/ynx/uxl64xr/models/sd15",
         required=False,
         help="Path to pretrained model or model identifier from huggingface.co/models.",
     )

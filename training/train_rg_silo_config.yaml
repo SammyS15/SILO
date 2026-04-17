@@ -17,7 +17,7 @@
 # RVv5-1: stablediffusionapi/realistic-vision-v51
 # SDv1-5: botp/stable-diffusion-v1-5
 # ====================================================
-model_id: /home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/stable_diffusion_1_5_model
+model_id: /lustre/fswork/projects/rech/ynx/uxl64xr/models/sd15
 # Diffusion hparams
 diffusion_mode: generation
 num_timesteps: 1000

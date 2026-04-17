@@ -381,7 +381,7 @@ class VaeWrapper:
             "flux" : (self._flux_encode, self._flux_decode),
         }
         self.paths = {
-            "sd1.5" : "/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/stable_diffusion_1_5_model",
+            "sd1.5" : "/lustre/fswork/projects/rech/ynx/uxl64xr/models/sd15",
             "rv" : "stablediffusionapi/realistic-vision-v51",
             "dream_like" : "dreamlike-art/dreamlike-photoreal-2.0",
             "sd2.1" :"stabilityai/stable-diffusion-2-1",
