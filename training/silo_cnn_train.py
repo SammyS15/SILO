@@ -24,7 +24,7 @@ def parse_args():
         "--pretrained_model_name_or_path",
         type=str,
         # "botp/stable-diffusion-v1-5" or "stablediffusionapi/realistic-vision-v51" ,
-        default="stablediffusionapi/realistic-vision-v51",
+        default="/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/stable_diffusion_1_5_model",
         required=False,
         help="Path to pretrained model or model identifier from huggingface.co/models.",
     )
@@ -509,7 +509,7 @@ def main():
         raise NotImplementedError("model type not implemented")
     
     if args.start_from_ckpt is not None:
-        model.load_state_dict(torch.load(args.start_from_ckpt,weights_only=True),strict=True)
+        model.load_state_dict(torch.load(args.start_from_ckpt,weights_only=False),strict=True)
         print(f"init the weights of the model from {args.start_from_ckpt}")
         
     model = model.to("cuda")

@@ -84,7 +84,7 @@ def load_scheduler(pipeline, MODEL_ID, mode="ddim"):
 
 def load_aggregation_network(aggregation_config, device, dtype):
     weights_path = aggregation_config["aggregation_ckpt"]
-    state_dict = torch.load(weights_path)
+    state_dict = torch.load(weights_path, weights_only=False)
     config = state_dict["config"]
     aggregation_kwargs = config.get("aggregation_kwargs", {})
     custom_aggregation_kwargs = {k: v for k, v in aggregation_config.items() if "aggregation" not in k}

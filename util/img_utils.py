@@ -238,7 +238,7 @@ class mask_generator:
         (mask_prob_range): for the case of random masking,
         specify the probability of individual pixels being masked
         """
-        assert mask_type in ['box', 'random', 'both', 'extreme']
+        assert mask_type in ['box', 'random', 'both', 'extreme', 'latino_pro']
         self.mask_type = mask_type
         self.mask_len_range = mask_len_range
         self.mask_prob_range = mask_prob_range
@@ -266,6 +266,27 @@ class mask_generator:
         return mask
         # return mask, t, tl, w, wh
 
+    def _retrieve_latino_pro(self, img):
+        """LATINO-PRO horizontal-strip mask, scaled to self.image_size.
+
+        LATINO-PRO defines the mask on 1024×1024 images as:
+            mask[:, H//2 - size//5 - 35 : H//2 + size//5 - 35,
+                     W//2 - 4*size//5 - 2 : W//2 + 4*size//5 + 2] = 0
+        with size=512. All pixel offsets are scaled proportionally here.
+        """
+        B, C, H, W = img.shape
+        scale = self.image_size / 1024.0
+        size = round(512 * scale)           # 256 at 512px, 512 at 1024px
+        row_off = round(35 * scale)         # 18 at 512px,  35 at 1024px
+        col_off = round(2 * scale)          #  1 at 512px,   2 at 1024px
+        row_start = H // 2 - size // 5 - row_off
+        row_end   = H // 2 + size // 5 - row_off
+        col_start = max(0, W // 2 - 4 * size // 5 - col_off)
+        col_end   = min(W,  W // 2 + 4 * size // 5 + col_off)
+        mask = torch.ones([B, C, H, W], device=img.device)
+        mask[:, :, row_start:row_end, col_start:col_end] = 0
+        return mask
+
     def _retrieve_random(self, img):
         total = self.image_size ** 2
         # random pixel sampling
@@ -291,6 +312,9 @@ class mask_generator:
         elif self.mask_type == 'extreme':
             mask, t, th, w, wl = self._retrieve_box(img)
             mask = 1. - mask
+            return mask
+        elif self.mask_type == 'latino_pro':
+            mask = self._retrieve_latino_pro(img)
             return mask
 
 def unnormalize(img, s=0.95):

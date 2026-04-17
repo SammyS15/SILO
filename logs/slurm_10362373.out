@@ -1,0 +1,215 @@
+Running normally
+Using output head with 4 channels
+running on gpu: NVIDIA H100 80GB HBM3
+[sample 1/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.90 consistency_psnr = 29.32
+saved as 0_s000.png
+[sample 2/100] lpips_alex = 0.115 lpips_vgg = 0.229 psnr = 24.43 consistency_psnr = 29.35
+saved as 0_s001.png
+[sample 3/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.59 consistency_psnr = 29.36
+saved as 0_s002.png
+[sample 4/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.84 consistency_psnr = 29.32
+saved as 0_s003.png
+[sample 5/100] lpips_alex = 0.115 lpips_vgg = 0.229 psnr = 24.36 consistency_psnr = 29.37
+saved as 0_s004.png
+[sample 6/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.90 consistency_psnr = 29.32
+saved as 0_s005.png
+[sample 7/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.88 consistency_psnr = 29.31
+saved as 0_s006.png
+[sample 8/100] lpips_alex = 0.107 lpips_vgg = 0.222 psnr = 24.84 consistency_psnr = 29.32
+saved as 0_s007.png
+[sample 9/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.78 consistency_psnr = 29.33
+saved as 0_s008.png
+[sample 10/100] lpips_alex = 0.105 lpips_vgg = 0.220 psnr = 24.94 consistency_psnr = 29.32
+saved as 0_s009.png
+[sample 11/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.83 consistency_psnr = 29.32
+saved as 0_s010.png
+[sample 12/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.86 consistency_psnr = 29.32
+saved as 0_s011.png
+[sample 13/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.88 consistency_psnr = 29.32
+saved as 0_s012.png
+[sample 14/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.81 consistency_psnr = 29.33
+saved as 0_s013.png
+[sample 15/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.86 consistency_psnr = 29.32
+saved as 0_s014.png
+[sample 16/100] lpips_alex = 0.107 lpips_vgg = 0.221 psnr = 24.91 consistency_psnr = 29.32
+saved as 0_s015.png
+[sample 17/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.42 consistency_psnr = 29.36
+saved as 0_s016.png
+[sample 18/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.91 consistency_psnr = 29.32
+saved as 0_s017.png
+[sample 19/100] lpips_alex = 0.105 lpips_vgg = 0.220 psnr = 24.96 consistency_psnr = 29.31
+saved as 0_s018.png
+[sample 20/100] lpips_alex = 0.114 lpips_vgg = 0.228 psnr = 24.51 consistency_psnr = 29.35
+saved as 0_s019.png
+[sample 21/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.90 consistency_psnr = 29.31
+saved as 0_s020.png
+[sample 22/100] lpips_alex = 0.114 lpips_vgg = 0.228 psnr = 24.72 consistency_psnr = 29.35
+saved as 0_s021.png
+[sample 23/100] lpips_alex = 0.107 lpips_vgg = 0.221 psnr = 24.88 consistency_psnr = 29.32
+saved as 0_s022.png
+[sample 24/100] lpips_alex = 0.103 lpips_vgg = 0.218 psnr = 25.06 consistency_psnr = 29.32
+saved as 0_s023.png
+[sample 25/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.85 consistency_psnr = 29.32
+saved as 0_s024.png
+[sample 26/100] lpips_alex = 0.109 lpips_vgg = 0.222 psnr = 24.74 consistency_psnr = 29.33
+saved as 0_s025.png
+[sample 27/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.86 consistency_psnr = 29.32
+saved as 0_s026.png
+[sample 28/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.86 consistency_psnr = 29.33
+saved as 0_s027.png
+[sample 29/100] lpips_alex = 0.115 lpips_vgg = 0.228 psnr = 24.66 consistency_psnr = 29.35
+saved as 0_s028.png
+[sample 30/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.85 consistency_psnr = 29.32
+saved as 0_s029.png
+[sample 31/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.48 consistency_psnr = 29.35
+saved as 0_s030.png
+[sample 32/100] lpips_alex = 0.110 lpips_vgg = 0.223 psnr = 24.69 consistency_psnr = 29.36
+saved as 0_s031.png
+[sample 33/100] lpips_alex = 0.112 lpips_vgg = 0.226 psnr = 24.72 consistency_psnr = 29.34
+saved as 0_s032.png
+[sample 34/100] lpips_alex = 0.115 lpips_vgg = 0.229 psnr = 24.32 consistency_psnr = 29.38
+saved as 0_s033.png
+[sample 35/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.90 consistency_psnr = 29.31
+saved as 0_s034.png
+[sample 36/100] lpips_alex = 0.113 lpips_vgg = 0.228 psnr = 24.47 consistency_psnr = 29.35
+saved as 0_s035.png
+[sample 37/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.84 consistency_psnr = 29.33
+saved as 0_s036.png
+[sample 38/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.80 consistency_psnr = 29.33
+saved as 0_s037.png
+[sample 39/100] lpips_alex = 0.105 lpips_vgg = 0.220 psnr = 24.98 consistency_psnr = 29.31
+saved as 0_s038.png
+[sample 40/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.90 consistency_psnr = 29.32
+saved as 0_s039.png
+[sample 41/100] lpips_alex = 0.114 lpips_vgg = 0.228 psnr = 24.46 consistency_psnr = 29.36
+saved as 0_s040.png
+[sample 42/100] lpips_alex = 0.114 lpips_vgg = 0.228 psnr = 24.50 consistency_psnr = 29.35
+saved as 0_s041.png
+[sample 43/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.84 consistency_psnr = 29.32
+saved as 0_s042.png
+[sample 44/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.88 consistency_psnr = 29.31
+saved as 0_s043.png
+[sample 45/100] lpips_alex = 0.104 lpips_vgg = 0.220 psnr = 25.02 consistency_psnr = 29.31
+saved as 0_s044.png
+[sample 46/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.39 consistency_psnr = 29.36
+saved as 0_s045.png
+[sample 47/100] lpips_alex = 0.115 lpips_vgg = 0.229 psnr = 24.59 consistency_psnr = 29.35
+saved as 0_s046.png
+[sample 48/100] lpips_alex = 0.114 lpips_vgg = 0.228 psnr = 24.43 consistency_psnr = 29.35
+saved as 0_s047.png
+[sample 49/100] lpips_alex = 0.110 lpips_vgg = 0.223 psnr = 24.69 consistency_psnr = 29.33
+saved as 0_s048.png
+[sample 50/100] lpips_alex = 0.115 lpips_vgg = 0.230 psnr = 24.39 consistency_psnr = 29.37
+saved as 0_s049.png
+[sample 51/100] lpips_alex = 0.103 lpips_vgg = 0.219 psnr = 25.03 consistency_psnr = 29.32
+saved as 0_s050.png
+[sample 52/100] lpips_alex = 0.115 lpips_vgg = 0.230 psnr = 24.28 consistency_psnr = 29.37
+saved as 0_s051.png
+[sample 53/100] lpips_alex = 0.115 lpips_vgg = 0.230 psnr = 24.38 consistency_psnr = 29.37
+saved as 0_s052.png
+[sample 54/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.90 consistency_psnr = 29.31
+saved as 0_s053.png
+[sample 55/100] lpips_alex = 0.115 lpips_vgg = 0.229 psnr = 24.39 consistency_psnr = 29.36
+saved as 0_s054.png
+[sample 56/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.34 consistency_psnr = 29.36
+saved as 0_s055.png
+[sample 57/100] lpips_alex = 0.115 lpips_vgg = 0.229 psnr = 24.34 consistency_psnr = 29.36
+saved as 0_s056.png
+[sample 58/100] lpips_alex = 0.114 lpips_vgg = 0.228 psnr = 24.44 consistency_psnr = 29.35
+saved as 0_s057.png
+[sample 59/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.89 consistency_psnr = 29.31
+saved as 0_s058.png
+[sample 60/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.86 consistency_psnr = 29.31
+saved as 0_s059.png
+[sample 61/100] lpips_alex = 0.105 lpips_vgg = 0.220 psnr = 24.97 consistency_psnr = 29.31
+saved as 0_s060.png
+[sample 62/100] lpips_alex = 0.114 lpips_vgg = 0.228 psnr = 24.52 consistency_psnr = 29.34
+saved as 0_s061.png
+[sample 63/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.85 consistency_psnr = 29.32
+saved as 0_s062.png
+[sample 64/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.90 consistency_psnr = 29.32
+saved as 0_s063.png
+[sample 65/100] lpips_alex = 0.104 lpips_vgg = 0.219 psnr = 25.01 consistency_psnr = 29.30
+saved as 0_s064.png
+[sample 66/100] lpips_alex = 0.105 lpips_vgg = 0.219 psnr = 24.92 consistency_psnr = 29.31
+saved as 0_s065.png
+[sample 67/100] lpips_alex = 0.105 lpips_vgg = 0.220 psnr = 24.94 consistency_psnr = 29.31
+saved as 0_s066.png
+[sample 68/100] lpips_alex = 0.114 lpips_vgg = 0.228 psnr = 24.44 consistency_psnr = 29.35
+saved as 0_s067.png
+[sample 69/100] lpips_alex = 0.107 lpips_vgg = 0.221 psnr = 24.85 consistency_psnr = 29.31
+saved as 0_s068.png
+[sample 70/100] lpips_alex = 0.110 lpips_vgg = 0.223 psnr = 24.67 consistency_psnr = 29.32
+saved as 0_s069.png
+[sample 71/100] lpips_alex = 0.115 lpips_vgg = 0.230 psnr = 24.31 consistency_psnr = 29.36
+saved as 0_s070.png
+[sample 72/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.46 consistency_psnr = 29.35
+saved as 0_s071.png
+[sample 73/100] lpips_alex = 0.104 lpips_vgg = 0.219 psnr = 25.00 consistency_psnr = 29.31
+saved as 0_s072.png
+[sample 74/100] lpips_alex = 0.107 lpips_vgg = 0.221 psnr = 24.88 consistency_psnr = 29.32
+saved as 0_s073.png
+[sample 75/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.84 consistency_psnr = 29.32
+saved as 0_s074.png
+[sample 76/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.89 consistency_psnr = 29.31
+saved as 0_s075.png
+[sample 77/100] lpips_alex = 0.115 lpips_vgg = 0.229 psnr = 24.35 consistency_psnr = 29.36
+saved as 0_s076.png
+[sample 78/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.39 consistency_psnr = 29.37
+saved as 0_s077.png
+[sample 79/100] lpips_alex = 0.108 lpips_vgg = 0.222 psnr = 24.81 consistency_psnr = 29.34
+saved as 0_s078.png
+[sample 80/100] lpips_alex = 0.117 lpips_vgg = 0.230 psnr = 24.22 consistency_psnr = 29.35
+saved as 0_s079.png
+[sample 81/100] lpips_alex = 0.103 lpips_vgg = 0.219 psnr = 25.02 consistency_psnr = 29.33
+saved as 0_s080.png
+[sample 82/100] lpips_alex = 0.105 lpips_vgg = 0.220 psnr = 24.95 consistency_psnr = 29.31
+saved as 0_s081.png
+[sample 83/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.92 consistency_psnr = 29.32
+saved as 0_s082.png
+[sample 84/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.86 consistency_psnr = 29.32
+saved as 0_s083.png
+[sample 85/100] lpips_alex = 0.105 lpips_vgg = 0.220 psnr = 24.90 consistency_psnr = 29.33
+saved as 0_s084.png
+[sample 86/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.35 consistency_psnr = 29.37
+saved as 0_s085.png
+[sample 87/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.46 consistency_psnr = 29.36
+saved as 0_s086.png
+[sample 88/100] lpips_alex = 0.107 lpips_vgg = 0.221 psnr = 24.84 consistency_psnr = 29.32
+saved as 0_s087.png
+[sample 89/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.52 consistency_psnr = 29.35
+saved as 0_s088.png
+[sample 90/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.87 consistency_psnr = 29.31
+saved as 0_s089.png
+[sample 91/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.90 consistency_psnr = 29.32
+saved as 0_s090.png
+[sample 92/100] lpips_alex = 0.103 lpips_vgg = 0.219 psnr = 25.01 consistency_psnr = 29.31
+saved as 0_s091.png
+[sample 93/100] lpips_alex = 0.114 lpips_vgg = 0.229 psnr = 24.38 consistency_psnr = 29.37
+saved as 0_s092.png
+[sample 94/100] lpips_alex = 0.115 lpips_vgg = 0.229 psnr = 24.33 consistency_psnr = 29.37
+saved as 0_s093.png
+[sample 95/100] lpips_alex = 0.106 lpips_vgg = 0.221 psnr = 24.86 consistency_psnr = 29.33
+saved as 0_s094.png
+[sample 96/100] lpips_alex = 0.106 lpips_vgg = 0.220 psnr = 24.90 consistency_psnr = 29.31
+saved as 0_s095.png
+[sample 97/100] lpips_alex = 0.105 lpips_vgg = 0.220 psnr = 24.94 consistency_psnr = 29.31
+saved as 0_s096.png
+[sample 98/100] lpips_alex = 0.107 lpips_vgg = 0.222 psnr = 24.84 consistency_psnr = 29.32
+saved as 0_s097.png
+[sample 99/100] lpips_alex = 0.107 lpips_vgg = 0.221 psnr = 24.88 consistency_psnr = 29.32
+saved as 0_s098.png
+[sample 100/100] lpips_alex = 0.104 lpips_vgg = 0.220 psnr = 24.99 consistency_psnr = 29.31
+saved as 0_s099.png
+
+--- Posterior summary over 100 samples (image 0) ---
+  psnr: mean=24.7284  std=0.2318
+  consistency_psnr: mean=29.3328  std=0.0207
+  lpips_alex: mean=0.1090  std=0.0041
+  lpips_vgg: mean=0.2235  std=0.0039
+  Y_psnr: mean=25.5463  std=0.2787
+  Y_consistency_psnr: mean=30.8586  std=0.0080
+  ms-ssim: mean=0.8497  std=0.0075
+summary saved to ./sample_results/inpainting/logs/0_summary.json
+means CSV saved to ./sample_results/inpainting/logs/0_means.csv
+posterior analysis figure saved to ./sample_results/inpainting/posterior/0_posterior_analysis.png

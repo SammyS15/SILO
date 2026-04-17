@@ -17,7 +17,7 @@
 # RVv5-1: stablediffusionapi/realistic-vision-v51
 # SDv1-5: botp/stable-diffusion-v1-5
 # ====================================================
-model_id: stablediffusionapi/realistic-vision-v51
+model_id: /home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/stable_diffusion_1_5_model
 # Diffusion hparams
 diffusion_mode: generation
 num_timesteps: 1000
@@ -39,7 +39,7 @@ aggregation_kwargs:
   cond_inpaint: False
 # Training hparams
 weight_decay: 0
-max_steps: 200000
+max_steps: 30000
 val_every_n_steps: 1000
 log_max: 10
 lr: 2e-4

@@ -37,7 +37,7 @@ def load_models(config_path=None, device=None, ckpt_path=None):
         config = OmegaConf.load(config_path)
         config = OmegaConf.to_container(config, resolve=True)
     else:
-        state_dict = torch.load(ckpt_path)
+        state_dict = torch.load(ckpt_path, weights_only=False)
         config = state_dict["config"]
     if device is None:
         device = config.get("device", "cuda")

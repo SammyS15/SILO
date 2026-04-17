@@ -249,6 +249,8 @@ def parse_list_from_string(list_string):
     return [int(item.strip()) for item in items if item.strip()]
 
 def is_debugging():
+    if os.environ.get('SLURM_JOB_ID'):
+        return False
     if sys.gettrace() is not None:
         return True
     for frame in traceback.extract_stack():
@@ -379,7 +381,7 @@ class VaeWrapper:
             "flux" : (self._flux_encode, self._flux_decode),
         }
         self.paths = {
-            "sd1.5" : "botp/stable-diffusion-v1-5",
+            "sd1.5" : "/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/stable_diffusion_1_5_model",
             "rv" : "stablediffusionapi/realistic-vision-v51",
             "dream_like" : "dreamlike-art/dreamlike-photoreal-2.0",
             "sd2.1" :"stabilityai/stable-diffusion-2-1",

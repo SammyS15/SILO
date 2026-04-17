@@ -68,6 +68,9 @@ def parse_args():
         "--seed", type=int, default=1000, help="A seed for reproducible training."
     )
     parser.add_argument(
+        "--num_samples", type=int, default=1, help="Number of IID posterior samples per image."
+    )
+    parser.add_argument(
         "--resolution",
         type=int,
         default=512,
@@ -352,12 +355,12 @@ def main():
     
     if args.model == "rg":
         pipe.dps_sampler = PosteriorSampling(operator=None, noiser=noiser,scale=args.scale)
-        pipe.aggregation_network.load_state_dict(torch.load(args.start_from_ckpt,weights_only=True)['aggregation_network'], strict=True)
+        pipe.aggregation_network.load_state_dict(torch.load(args.start_from_ckpt,weights_only=False)['aggregation_network'], strict=True)
         pipe.aggregation_network = pipe.aggregation_network.to("cuda")
         pipe.aggregation_network.eval()
     elif args.model == "cnn":
         model = DegradationModel(num_latent_channels,layer_norm=True,sigma_condition=args.sigma_condition)
-        model.load_state_dict(torch.load(args.start_from_ckpt),strict=True)
+        model.load_state_dict(torch.load(args.start_from_ckpt, weights_only=False),strict=True)
         model = model.to(device)
         model.eval()
         pipe.dps_sampler = PosteriorSampling(operator=model, noiser=noiser,scale=args.scale)
@@ -370,7 +373,7 @@ def main():
             num_blocks=3,
             max_noise=0.1
             )
-        model.load_state_dict(torch.load(args.start_from_ckpt),strict=True)
+        model.load_state_dict(torch.load(args.start_from_ckpt, weights_only=False),strict=True)
         model = model.to(device)
         model.eval()
         pipe.dps_sampler = PosteriorSampling(operator=model, noiser=noiser,scale=args.scale)
@@ -444,95 +447,187 @@ def main():
         if args.clamp:
             w = w.clamp(-4,4)
 
-        #the reconstruction pipeline
-        start_time = time.time()
-        set_seeds(args.seed,deterministic=args.deterministic)
-        image = pipe(args.prompt, negative_prompt=args.negative_prompt, #prompt and negative prompt
-                      guidance_scale=args.cfg, height=args.resolution, width=args.resolution,num_inference_steps=args.steps, #regular LDM args
-                      do_dps=True, w=w.clone(),
-                      sampling_args=args, cond_inpaint=cond_inpaint
-                    ).images[0]
-        end_time = time.time() 
-
-        #preliminary stage to calculate metrics
-        image_tensor = to_tensor(image).unsqueeze(0).to(device).requires_grad_(False)
-        image_tensor_normed = normalizer(image_tensor)
-        if measure_config['operator'] ['name'] == 'inpainting':
-            image_tensor_y = operator.forward(image_tensor_normed, mask=inpaint_mask)
-        else: 
-            image_tensor_y = operator.forward(image_tensor_normed)
-        ycbcr_image = rgb_to_ycbcr(image_tensor)
-        ycbcr_x_og = rgb_to_ycbcr(x_og[0:1])
-
-        #calculate metrics
-        psnr = psnr_calc(image_tensor_normed,x[0:1]).cpu().item()
-        ms_ssim = ms_ssim_calc(image_tensor_normed,x[0:1]).cpu().item()
-        Y_psnr = psnr_calc_0_to_1(ycbcr_image[:,0,:,:],ycbcr_x_og[:,0,:,:]).cpu().item()
-        lpips_alex = lpips_alex_calc(image_tensor_normed,x[0:1]).cpu().item()
-        lpips_vgg = lpips_vgg_calc(image_tensor_normed,x[0:1]).cpu().item()
-        
-        if "super_resolution" in args.task_config:
-            y = resize(y,args.resolution,interpolation=InterpolationMode.BICUBIC,antialias=True)
-            image_tensor_y = resize(image_tensor_y,args.resolution,interpolation=InterpolationMode.BICUBIC,antialias=True)
-
-        consistency_psnr = psnr_calc(image_tensor_y,y[0:1]).cpu().item()
-        Y_consistency_psnr = psnr_calc_0_to_1(rgb_to_ycbcr(((image_tensor_y/2)+0.5).clamp(0,1))[:,0,:,:],rgb_to_ycbcr(((y[0:1]/2)+0.5).clamp(0,1))[:,0,:,:]).cpu().item()
-        
-        print(f"x_og to image {lpips_alex = :.3f} {lpips_vgg = :.3f}")
-        print(f"x_og to image {psnr = :.2f}  {consistency_psnr = :.2f}")
-        print(f"Y of YCbCr {Y_psnr = :.2f}  {Y_consistency_psnr = :.2f}")
-
-
-        #saving code
+        # determine base file name once per image (shared across all samples)
         files = os.listdir(args.folder_path)
         numeric_png_files = [file for file in files if re.match(r'^\d+\.png$', file)]
         if numeric_png_files == []:
             max_number = -1
         else:
-            # Extract numbers from filenames and find the maximum
             numbers = [int(file.split(".")[0]) for file in numeric_png_files]
             max_number = max(numbers)
+        base_file_name = args.explicit_name if args.explicit_name is not None else f"{max_number + 1}"
 
-        file_name = args.explicit_name if args.explicit_name is not None else f"{max_number + 1}"
+        all_sample_metrics = []
+        sample_tensors = []    # [3, H, W] per sample, in [-1,1], on CPU
+        sample_y_tensors = []  # [3, H, W] per sample (operator-applied), on CPU
 
-        with torch.no_grad():
-            grid = make_grid(to_pil_image(x_og[0].float()).resize((512,512))
-                            ,to_pil_image((y_n[0].float()/2 + 0.5).clamp(0,1).cpu()).resize((512,512))
-                            ,image.resize((512,512))
-                            ,to_pil_image((image_tensor_y[0].float()/2+0.5).clamp(0,1).cpu()).resize((512,512))
-                            )
-            grid = add_text_to_grid_sep(grid,["x" , "A(x) + n" , "output", "A(output)"], f"{file_name}: noise sigma = {noiser.sigma} ::: {psnr = :.2f} {lpips_alex = :.3f} {lpips_vgg = :.3f} {consistency_psnr = :.3f}", font_size=20,im_size=args.resolution)
-        if args.save_mode == "grid":
-            grid.save(os.path.join(args.folder_path,f"{file_name}.png"))
-        elif args.save_mode == "image":
-            image.save(os.path.join(args.folder_path,f"{file_name}.png"))
-        elif args.save_mode == "both":
-            grid.save(os.path.join(args.folder_path,"grids",f"{file_name}.png"))
-            image.save(os.path.join(args.folder_path,"images",f"{file_name}.png"))
-        else:
-            raise NotImplementedError
+        for sample_idx in range(args.num_samples):
 
-        notes = args.notes[:]
-        log_data = {
-            'args': {k: v for k, v in vars(args).items() if k != 'notes'},
-            'metrics': {
+            sample_file_name = f"{base_file_name}_s{sample_idx:03d}" if args.num_samples > 1 else base_file_name
+
+            #the reconstruction pipeline
+            start_time = time.time()
+            set_seeds(args.seed + sample_idx, deterministic=args.deterministic)
+            image = pipe(args.prompt, negative_prompt=args.negative_prompt, #prompt and negative prompt
+                          guidance_scale=args.cfg, height=args.resolution, width=args.resolution,num_inference_steps=args.steps, #regular LDM args
+                          do_dps=True, w=w.clone(),
+                          sampling_args=args, cond_inpaint=cond_inpaint
+                        ).images[0]
+            end_time = time.time()
+
+            #preliminary stage to calculate metrics
+            image_tensor = to_tensor(image).unsqueeze(0).to(device).requires_grad_(False)
+            image_tensor_normed = normalizer(image_tensor)
+            if measure_config['operator'] ['name'] == 'inpainting':
+                image_tensor_y = operator.forward(image_tensor_normed, mask=inpaint_mask)
+            else:
+                image_tensor_y = operator.forward(image_tensor_normed)
+            ycbcr_image = rgb_to_ycbcr(image_tensor)
+            ycbcr_x_og = rgb_to_ycbcr(x_og[0:1])
+
+            #calculate metrics
+            psnr = psnr_calc(image_tensor_normed,x[0:1]).cpu().item()
+            ms_ssim = ms_ssim_calc(image_tensor_normed,x[0:1]).cpu().item()
+            Y_psnr = psnr_calc_0_to_1(ycbcr_image[:,0,:,:],ycbcr_x_og[:,0,:,:]).cpu().item()
+            lpips_alex = lpips_alex_calc(image_tensor_normed,x[0:1]).cpu().item()
+            lpips_vgg = lpips_vgg_calc(image_tensor_normed,x[0:1]).cpu().item()
+
+            if "super_resolution" in args.task_config:
+                y = resize(y,args.resolution,interpolation=InterpolationMode.BICUBIC,antialias=True)
+                image_tensor_y = resize(image_tensor_y,args.resolution,interpolation=InterpolationMode.BICUBIC,antialias=True)
+
+            consistency_psnr = psnr_calc(image_tensor_y,y[0:1]).cpu().item()
+            Y_consistency_psnr = psnr_calc_0_to_1(rgb_to_ycbcr(((image_tensor_y/2)+0.5).clamp(0,1))[:,0,:,:],rgb_to_ycbcr(((y[0:1]/2)+0.5).clamp(0,1))[:,0,:,:]).cpu().item()
+
+            print(f"[sample {sample_idx+1}/{args.num_samples}] {lpips_alex = :.3f} {lpips_vgg = :.3f} {psnr = :.2f} {consistency_psnr = :.2f}")
+
+            with torch.no_grad():
+                grid = make_grid(to_pil_image(x_og[0].float()).resize((512,512))
+                                ,to_pil_image((y_n[0].float()/2 + 0.5).clamp(0,1).cpu()).resize((512,512))
+                                ,image.resize((512,512))
+                                ,to_pil_image((image_tensor_y[0].float()/2+0.5).clamp(0,1).cpu()).resize((512,512))
+                                )
+                grid = add_text_to_grid_sep(grid,["x" , "A(x) + n" , "output", "A(output)"], f"{sample_file_name}: noise sigma = {noiser.sigma} ::: {psnr = :.2f} {lpips_alex = :.3f} {lpips_vgg = :.3f} {consistency_psnr = :.3f}", font_size=20,im_size=args.resolution)
+            if args.save_mode == "grid":
+                grid.save(os.path.join(args.folder_path,f"{sample_file_name}.png"))
+            elif args.save_mode == "image":
+                image.save(os.path.join(args.folder_path,f"{sample_file_name}.png"))
+            elif args.save_mode == "both":
+                grid.save(os.path.join(args.folder_path,"grids",f"{sample_file_name}.png"))
+                image.save(os.path.join(args.folder_path,"images",f"{sample_file_name}.png"))
+            else:
+                raise NotImplementedError
+
+            notes = args.notes[:]
+            sample_metrics = {
                 'psnr': psnr,
-                'consistency_psnr': consistency_psnr, 
+                'consistency_psnr': consistency_psnr,
                 'lpips_alex': lpips_alex,
                 'lpips_vgg': lpips_vgg,
-                'Y_psnr': Y_psnr, 
-                'Y_consistency_psnr': Y_consistency_psnr, 
-                'ms-ssim':ms_ssim,
-                'sampling_time': round(end_time - start_time,2)
-            },
-            'notes': notes if notes is not None else '',
-            "gpu_name": gpu_name,
-            "run_command": command_line_exec
-        } 
-        with open(os.path.join(args.folder_path,"logs",f"{file_name}.json"), 'w') as f:
+                'Y_psnr': Y_psnr,
+                'Y_consistency_psnr': Y_consistency_psnr,
+                'ms-ssim': ms_ssim,
+                'sampling_time': round(end_time - start_time, 2)
+            }
+            log_data = {
+                'args': {k: v for k, v in vars(args).items() if k != 'notes'},
+                'metrics': sample_metrics,
+                'notes': notes if notes is not None else '',
+                "gpu_name": gpu_name,
+                "run_command": command_line_exec
+            }
+            with open(os.path.join(args.folder_path,"logs",f"{sample_file_name}.json"), 'w') as f:
                 json.dump(log_data, f, indent=4)
 
-        print(f"saved as {file_name}.png")
+            print(f"saved as {sample_file_name}.png")
+            all_sample_metrics.append(sample_metrics)
+            sample_tensors.append(image_tensor_normed[0].detach().cpu())
+            sample_y_tensors.append(image_tensor_y[0].detach().cpu())
+
+        # aggregate summary across all samples for this image
+        if args.num_samples > 1:
+            import numpy as np
+            import csv
+            import matplotlib
+            matplotlib.use('Agg')
+            import matplotlib.pyplot as plt
+
+            metric_keys = ['psnr', 'consistency_psnr', 'lpips_alex', 'lpips_vgg', 'Y_psnr', 'Y_consistency_psnr', 'ms-ssim']
+            summary = {}
+            for k in metric_keys:
+                vals = [m[k] for m in all_sample_metrics]
+                summary[k] = {'mean': float(np.mean(vals)), 'std': float(np.std(vals)), 'all': vals}
+
+            print(f"\n--- Posterior summary over {args.num_samples} samples (image {base_file_name}) ---")
+            for k in metric_keys:
+                print(f"  {k}: mean={summary[k]['mean']:.4f}  std={summary[k]['std']:.4f}")
+
+            # --- save full summary JSON (mean, std, all values) ---
+            summary_path = os.path.join(args.folder_path, "logs", f"{base_file_name}_summary.json")
+            with open(summary_path, 'w') as f:
+                json.dump({'num_samples': args.num_samples, 'metrics': summary}, f, indent=4)
+            print(f"summary saved to {summary_path}")
+
+            # --- save means-only CSV for easy table use ---
+            csv_path = os.path.join(args.folder_path, "logs", f"{base_file_name}_means.csv")
+            with open(csv_path, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(['metric', 'mean', 'std'])
+                for k in metric_keys:
+                    writer.writerow([k, f"{summary[k]['mean']:.6f}", f"{summary[k]['std']:.6f}"])
+            print(f"means CSV saved to {csv_path}")
+
+            # --- posterior visualisation plots ---
+            posterior_dir = os.path.join(args.folder_path, "posterior")
+            os.makedirs(posterior_dir, exist_ok=True)
+
+            stacked   = torch.stack(sample_tensors)    # [N, 3, H, W] in [-1, 1]
+            stacked_y = torch.stack(sample_y_tensors)  # [N, 3, H, W]
+
+            # 1. Mean image
+            mean_tensor = stacked.mean(dim=0)  # [3, H, W]
+            mean_img = to_pil_image(((mean_tensor / 2) + 0.5).clamp(0, 1))
+            mean_img.save(os.path.join(posterior_dir, f"{base_file_name}_mean.png"))
+
+            # 2. Std heatmap (averaged across RGB channels)
+            std_map = stacked.std(dim=0).mean(dim=0).numpy()  # [H, W]
+
+            # 3. Residual: GT − sample_0  (signed, averaged across channels)
+            residual_gt_map = (x[0].cpu() - sample_tensors[0]).mean(dim=0).numpy()  # [H, W]
+
+            # 4. Residual: Obs − A(sample_0)  (signed, averaged across channels)
+            residual_obs_map = (y[0].cpu() - sample_y_tensors[0]).mean(dim=0).numpy()  # [H, W]
+
+            # combined 4-panel figure
+            fig, axes = plt.subplots(1, 4, figsize=(22, 6))
+
+            axes[0].imshow(np.array(mean_img))
+            axes[0].set_title(f'Mean of {args.num_samples} samples', fontsize=12)
+            axes[0].axis('off')
+
+            im1 = axes[1].imshow(std_map, cmap='hot', vmin=0)
+            axes[1].set_title('Std of samples\n(avg across RGB)', fontsize=12)
+            axes[1].axis('off')
+            plt.colorbar(im1, ax=axes[1], fraction=0.046, pad=0.04)
+
+            vmax2 = max(np.abs(residual_gt_map).max(), 1e-6)
+            im2 = axes[2].imshow(residual_gt_map, cmap='RdBu_r', vmin=-vmax2, vmax=vmax2)
+            axes[2].set_title('Residual: GT − sample_0\n(avg across RGB)', fontsize=12)
+            axes[2].axis('off')
+            plt.colorbar(im2, ax=axes[2], fraction=0.046, pad=0.04)
+
+            vmax3 = max(np.abs(residual_obs_map).max(), 1e-6)
+            im3 = axes[3].imshow(residual_obs_map, cmap='RdBu_r', vmin=-vmax3, vmax=vmax3)
+            axes[3].set_title('Residual: Obs − A(sample_0)\n(avg across RGB)', fontsize=12)
+            axes[3].axis('off')
+            plt.colorbar(im3, ax=axes[3], fraction=0.046, pad=0.04)
+
+            fig.suptitle(f'Posterior analysis — image {base_file_name} ({args.num_samples} IID samples)', fontsize=14)
+            fig.tight_layout()
+            panel_path = os.path.join(posterior_dir, f"{base_file_name}_posterior_analysis.png")
+            fig.savefig(panel_path, dpi=150, bbox_inches='tight')
+            plt.close(fig)
+            print(f"posterior analysis figure saved to {panel_path}")
 
     
 if __name__ == "__main__":

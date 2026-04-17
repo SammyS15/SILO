@@ -1,0 +1,8 @@
+metric,mean,std
+psnr,24.728374,0.231770
+consistency_psnr,29.332780,0.020741
+lpips_alex,0.109038,0.004095
+lpips_vgg,0.223519,0.003934
+Y_psnr,25.546259,0.278713
+Y_consistency_psnr,30.858566,0.008006
+ms-ssim,0.849724,0.007467

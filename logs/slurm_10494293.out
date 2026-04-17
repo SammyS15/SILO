@@ -1,0 +1,30 @@
+Running normally
+Created main folder: ./sample_results/inpainting_apt
+Created subfolder: ./sample_results/inpainting_apt/logs
+Created subfolder: ./sample_results/inpainting_apt/plots
+Created subfolder: ./sample_results/inpainting_apt/images
+Created subfolder: ./sample_results/inpainting_apt/grids
+Using output head with 4 channels
+running on gpu: NVIDIA H100 80GB HBM3
+[sample 1/5] lpips_alex = 0.206 lpips_vgg = 0.279 psnr = 27.37 consistency_psnr = 35.21
+saved as apt_s000.png
+[sample 2/5] lpips_alex = 0.202 lpips_vgg = 0.273 psnr = 27.47 consistency_psnr = 35.18
+saved as apt_s001.png
+[sample 3/5] lpips_alex = 0.203 lpips_vgg = 0.275 psnr = 27.45 consistency_psnr = 35.16
+saved as apt_s002.png
+[sample 4/5] lpips_alex = 0.203 lpips_vgg = 0.275 psnr = 27.48 consistency_psnr = 35.17
+saved as apt_s003.png
+[sample 5/5] lpips_alex = 0.203 lpips_vgg = 0.275 psnr = 27.45 consistency_psnr = 35.17
+saved as apt_s004.png
+
+--- Posterior summary over 5 samples (image apt) ---
+  psnr: mean=27.4426  std=0.0366
+  consistency_psnr: mean=35.1802  std=0.0160
+  lpips_alex: mean=0.2036  std=0.0015
+  lpips_vgg: mean=0.2752  std=0.0018
+  Y_psnr: mean=27.7456  std=0.0356
+  Y_consistency_psnr: mean=35.9117  std=0.0133
+  ms-ssim: mean=0.8479  std=0.0005
+summary saved to ./sample_results/inpainting_apt/logs/apt_summary.json
+means CSV saved to ./sample_results/inpainting_apt/logs/apt_means.csv
+posterior analysis figure saved to ./sample_results/inpainting_apt/posterior/apt_posterior_analysis.png

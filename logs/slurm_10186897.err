@@ -1,0 +1,14 @@
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) CCconfig        6)  ucx/1.14.1         11) flexiblas/3.3.1
+  2) gentoo/2023     7)  libfabric/1.18.0   12) aocl-blas/5.1
+  3) gcccore/.12.3   8)  pmix/4.2.4         13) aocl-lapack/5.1
+  4) gcc/12.3        9)  ucc/1.2.0          14) StdEnv/2023
+  5) hwloc/2.9.1     10) openmpi/4.1.5
+Traceback (most recent call last):
+  File "/lustre10/scratch/sammys15/SILO/silo_sample.py", line 29, in <module>
+    from silo_utils import DegradationModel, make_grid, set_seeds, load_yaml , StableDiffusionPipeline , PosteriorSampling, add_text_to_grid_sep, ensure_directory_structure, parse_list_from_string, is_debugging, VaeWrapper, get_command_line
+  File "/lustre10/scratch/sammys15/SILO/silo_utils.py", line 14, in <module>
+    import einops
+ModuleNotFoundError: No module named 'einops'

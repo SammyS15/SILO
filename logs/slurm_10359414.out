@@ -1,0 +1,12 @@
+Running normally
+Created main folder: ./sample_results/inpainting
+Created subfolder: ./sample_results/inpainting/logs
+Created subfolder: ./sample_results/inpainting/plots
+Created subfolder: ./sample_results/inpainting/images
+Created subfolder: ./sample_results/inpainting/grids
+Using output head with 4 channels
+running on gpu: NVIDIA H100 80GB HBM3
+x_og to image lpips_alex = 0.134 lpips_vgg = 0.252
+x_og to image psnr = 23.46  consistency_psnr = 29.19
+Y of YCbCr Y_psnr = 24.17  Y_consistency_psnr = 30.72
+saved as 0.png

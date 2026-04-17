@@ -48,7 +48,7 @@ def parse_args():
         "--pretrained_model_name_or_path",
         type=str,
         # "botp/stable-diffusion-v1-5" or "stablediffusionapi/realistic-vision-v51" ,
-        default="stablediffusionapi/realistic-vision-v51" ,
+        default="/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/stable_diffusion_1_5_model",
         required=False,
         help="Path to pretrained model or model identifier from huggingface.co/models.",
     )
@@ -601,7 +601,7 @@ def main(args):
     print("config = ",config)
     print(f"{aggregation_network.output_head_act=}")
     if args.start_from_ckpt is not None:
-        aggregation_network.load_state_dict(torch.load(args.start_from_ckpt)['aggregation_network'], strict=False)
+        aggregation_network.load_state_dict(torch.load(args.start_from_ckpt, weights_only=False)['aggregation_network'], strict=False)
     
     wandb.run.name = f"{str(wandb.run.id)}_{wandb.run.name}"
     run_name = wandb.run.name

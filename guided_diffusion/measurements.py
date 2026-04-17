@@ -224,7 +224,7 @@ class NonlinearBlurOperator(NonLinearOperator):
             model_path = opt["pretrained"]
         blur_model = KernelWizard(opt)
         blur_model.eval()
-        blur_model.load_state_dict(torch.load(model_path)) 
+        blur_model.load_state_dict(torch.load(model_path, weights_only=False)) 
         blur_model = blur_model.to(self.device)
         return blur_model
     

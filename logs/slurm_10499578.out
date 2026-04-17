@@ -1,0 +1,25 @@
+Running normally
+Using output head with 4 channels
+running on gpu: NVIDIA H100 80GB HBM3
+[sample 1/5] lpips_alex = 0.269 lpips_vgg = 0.319 psnr = 26.03 consistency_psnr = 28.70
+saved as apt_s000.png
+[sample 2/5] lpips_alex = 0.280 lpips_vgg = 0.321 psnr = 26.10 consistency_psnr = 28.88
+saved as apt_s001.png
+[sample 3/5] lpips_alex = 0.277 lpips_vgg = 0.317 psnr = 26.05 consistency_psnr = 28.57
+saved as apt_s002.png
+[sample 4/5] lpips_alex = 0.283 lpips_vgg = 0.325 psnr = 26.69 consistency_psnr = 29.34
+saved as apt_s003.png
+[sample 5/5] lpips_alex = 0.282 lpips_vgg = 0.323 psnr = 26.30 consistency_psnr = 29.10
+saved as apt_s004.png
+
+--- Posterior summary over 5 samples (image apt) ---
+  psnr: mean=26.2326  std=0.2474
+  consistency_psnr: mean=28.9166  std=0.2767
+  lpips_alex: mean=0.2782  std=0.0049
+  lpips_vgg: mean=0.3212  std=0.0028
+  Y_psnr: mean=27.2645  std=0.2304
+  Y_consistency_psnr: mean=29.8503  std=0.2547
+  ms-ssim: mean=0.7975  std=0.0048
+summary saved to ./sample_results/inpainting_apt/logs/apt_summary.json
+means CSV saved to ./sample_results/inpainting_apt/logs/apt_means.csv
+posterior analysis figure saved to ./sample_results/inpainting_apt/posterior/apt_posterior_analysis.png

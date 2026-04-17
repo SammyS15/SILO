@@ -1,0 +1,126 @@
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) CCconfig        6)  ucx/1.14.1         11) flexiblas/3.3.1
+  2) gentoo/2023     7)  libfabric/1.18.0   12) aocl-blas/5.1
+  3) gcccore/.12.3   8)  pmix/4.2.4         13) aocl-lapack/5.1
+  4) gcc/12.3        9)  ucc/1.2.0          14) StdEnv/2023
+  5) hwloc/2.9.1     10) openmpi/4.1.5
+Traceback (most recent call last):
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/connection.py", line 204, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/connection.py", line 759, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/connection.py", line 219, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: HTTPSConnection(host='huggingface.co', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/requests/adapters.py", line 645, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/urllib3/util/retry.py", line 535, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /stablediffusionapi/realistic-vision-v51/resolve/main/vae/config.json (Caused by NewConnectionError("HTTPSConnection(host='huggingface.co', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1746, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1666, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 364, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 387, in _request_wrapper
+    response = get_session().request(method=method, url=url, **params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/requests/sessions.py", line 592, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/requests/sessions.py", line 706, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 93, in send
+    return super().send(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/requests/adapters.py", line 678, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: (MaxRetryError('HTTPSConnectionPool(host=\'huggingface.co\', port=443): Max retries exceeded with url: /stablediffusionapi/realistic-vision-v51/resolve/main/vae/config.json (Caused by NewConnectionError("HTTPSConnection(host=\'huggingface.co\', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable"))'), '(Request ID: 10250973-9d79-4332-83f3-7afb151b6c4e)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/diffusers/configuration_utils.py", line 380, in load_config
+    config_file = hf_hub_download(
+                  ^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/utils/_deprecation.py", line 101, in inner_f
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1232, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1339, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/file_download.py", line 1857, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+huggingface_hub.errors.LocalEntryNotFoundError: An error happened while trying to locate the file on the Hub and we cannot find the requested files in the local cache. Please check your connection and try again or make sure your Internet connection is on.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/lustre10/scratch/sammys15/SILO/silo_sample.py", line 539, in <module>
+    main()
+  File "/lustre10/scratch/sammys15/SILO/silo_sample.py", line 338, in main
+    vae_wrapper = VaeWrapper(pretrained_model_name_or_path=args.pretrained_model_name_or_path,type=args.diff_model)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_utils.py", line 364, in __init__
+    self.vae = AutoencoderKL.from_pretrained(self.pretrained_model_name_or_path, subfolder="vae").to("cuda")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/diffusers/models/modeling_utils.py", line 567, in from_pretrained
+    config, unused_kwargs, commit_hash = cls.load_config(
+                                         ^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/lustre10/scratch/sammys15/SILO/silo_env/lib/python3.11/site-packages/diffusers/configuration_utils.py", line 406, in load_config
+    raise EnvironmentError(
+OSError: stablediffusionapi/realistic-vision-v51 does not appear to have a file named config.json.

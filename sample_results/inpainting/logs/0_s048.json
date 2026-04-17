@@ -1,0 +1,56 @@
+{
+    "args": {
+        "pretrained_model_name_or_path": "stablediffusionapi/realistic-vision-v51",
+        "dataset_name": "ffhq",
+        "prompt": "A high quality photo of a face",
+        "negative_prompt": null,
+        "seed": 1000,
+        "num_samples": 100,
+        "resolution": 512,
+        "start_from_ckpt": "trained_ckpt/RG/ip_rg_ffhq_operator.pt",
+        "task_config": "configs/center_inpainting_config.yaml",
+        "noise_sigma": null,
+        "cfg": 1.0,
+        "scale": 1.0,
+        "steps": 999,
+        "sr_factor": null,
+        "idx_image": 0,
+        "image_path": null,
+        "explicit_name": null,
+        "sigma_condition": true,
+        "folder_path": "./sample_results/inpainting",
+        "clamp": false,
+        "save_mode": "both",
+        "start": 0,
+        "end": 1,
+        "disable_bar": true,
+        "list_to_do": null,
+        "hq_captions": false,
+        "model": "rg",
+        "diff_model": "rv",
+        "dtype": "fp32",
+        "print_vars": false,
+        "cfg_fix": false,
+        "deterministic": false,
+        "dps_operator": {
+            "name": "inpainting"
+        },
+        "dps_noiser": {
+            "name": "gaussian",
+            "sigma": 0.02
+        }
+    },
+    "metrics": {
+        "psnr": 24.68756866455078,
+        "consistency_psnr": 29.328842163085938,
+        "lpips_alex": 0.10976885259151459,
+        "lpips_vgg": 0.22315475344657898,
+        "Y_psnr": 25.476184844970703,
+        "Y_consistency_psnr": 30.85057830810547,
+        "ms-ssim": 0.8504419326782227,
+        "sampling_time": 446.31
+    },
+    "notes": "",
+    "gpu_name": "NVIDIA H100 80GB HBM3",
+    "run_command": "python silo_sample.py --start_from_ckpt=trained_ckpt/RG/ip_rg_ffhq_operator.pt --task_config=configs/center_inpainting_config.yaml --sigma_condition --idx_image=0 --scale=1 --save_mode=both --folder_path=./sample_results/inpainting --disable_bar --num_samples=100"
+}

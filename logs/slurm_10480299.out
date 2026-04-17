@@ -1,0 +1,5 @@
+Running under a debugger
+Using output head with 4 channels
+running on gpu: NVIDIA H100 80GB HBM3
+[sample 1/1] lpips_alex = 0.485 lpips_vgg = 0.550 psnr = 18.08 consistency_psnr = 21.77
+saved as 1.png

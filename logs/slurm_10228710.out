@@ -1,0 +1,7 @@
+Running under a debugger
+Using output head with 4 channels
+running on gpu: NVIDIA H100 80GB HBM3
+x_og to image lpips_alex = 0.485 lpips_vgg = 0.551
+x_og to image psnr = 18.09  consistency_psnr = 21.77
+Y of YCbCr Y_psnr = 18.29  Y_consistency_psnr = 22.37
+saved as 0.png
