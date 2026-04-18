@@ -1,31 +1,41 @@
 #!/bin/bash
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
-#SBATCH --time=0:40:00
-#SBATCH --account=rrg-lplevass
-#SBATCH --gres=gpu:1
 #SBATCH --job-name=silo_inpaint
-#SBATCH --output=/home/sammys15/links/scratch/SILO/logs/slurm_%j.out
-#SBATCH --error=/home/sammys15/links/scratch/SILO/logs/slurm_%j.err
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=12
+#SBATCH --time=0:50:00
+#SBATCH --gpus-per-node=1
+#SBATCH --account=ynx@v100
+#SBATCH -C v100-32g
+#SBATCH --output=./logs/silo_inpaint_slurm_%j.out
+#SBATCH --error=./logs/silo_inpaint_slurm_%j.err
 #SBATCH --mail-user="sammy.sharief@umontreal.ca"
 #SBATCH --mail-type=ALL
 
 set -euo pipefail
-
-SILO_ROOT="$HOME/links/scratch/SILO"
+export SILO_ROOT="/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO"
+SILO_ROOT="/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO"
 mkdir -p "$SILO_ROOT/logs"
 
 module purge
-module load python/3.11
+
+# only keep system-level GPU/compiler tools if needed
 module load gcc
-module load arrow/23.0.1
 module load opencv
 module load ffmpeg
 
-source "$SILO_ROOT/silo_env/bin/activate"
+export PATH="/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/mamba/bin:$PATH"
+
+# ---- conda/mamba setup ----
+eval "$(mamba shell hook --shell bash)"
+mamba activate silo
+
+export HF_HOME="$SCRATCH/hf_cache"
+mkdir -p "$HF_HOME"
 
 export PYTHONUNBUFFERED=1
+
+export HF_HOME=/lustre/fsn1/projects/rech/ynx/uxl64xr/hf_cache
+export TORCH_HOME=/lustre/fsn1/projects/rech/ynx/uxl64xr/torch_cache
 
 cd "$SILO_ROOT"
 
@@ -59,17 +69,18 @@ cd "$SILO_ROOT"
 
 python silo_sample.py \
   --start_from_ckpt=trained_ckpt/RG/ip_rg_coco_operator.pt \
+  --pretrained_model_name_or_path=$HF_HOME/models/realistic-vision-v51
   --task_config=configs/latino_pro_inpainting_config.yaml \
   --sigma_condition \
   --clamp \
-  --image_path=/home/sammys15/links/scratch/latent_model_test_images/apt.png \
+  --image_path=../latent_model_test_images/apt.png \
   --explicit_name=apt \
   --prompt="a photo of a living room" \
   --scale=1 \
   --save_mode=both \
   --folder_path=./sample_results/inpainting_apt \
   --disable_bar \
-  --num_samples=5
+  --num_samples=1
 
 # ---------------------------------------------------------------------------
 # Optional: train your own CNN operator (only needed if you want to use the

@@ -337,8 +337,14 @@ def main():
     lpips_alex_calc = LearnedPerceptualImagePatchSimilarity(net_type='alex').to("cuda")
     lpips_vgg_calc = LearnedPerceptualImagePatchSimilarity(net_type='vgg').to("cuda")
     ms_ssim_calc = MultiScaleStructuralSimilarityIndexMeasure(data_range=(-1,1)).to("cuda")
-
-    vae_wrapper = VaeWrapper(pretrained_model_name_or_path=args.pretrained_model_name_or_path,type=args.diff_model)
+    print("diff_model =", args.diff_model)
+    print("pretrained_model_name_or_path =", args.pretrained_model_name_or_path)
+    # vae_wrapper = VaeWrapper(pretrained_model_name_or_path=args.pretrained_model_name_or_path,type=args.diff_model)
+    vae_wrapper = VaeWrapper(
+        vae=None,
+        type=None,
+        pretrained_model_name_or_path=args.pretrained_model_name_or_path
+    )
     vae_type = vae_wrapper.get_vae_type()
     num_latent_channels = vae_wrapper.get_num_latent_channels()
     args.pretrained_model_name_or_path = vae_wrapper.get_pretrained_model_name_or_path()

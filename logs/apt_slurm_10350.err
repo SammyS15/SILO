@@ -1,0 +1,6 @@
+Loading opencv/4.5.4-cuda
+  Loading requirement: cuda/11.2
+Traceback (most recent call last):
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/training/silo_rg_train.py", line 22, in <module>
+    import wandb
+ModuleNotFoundError: No module named 'wandb'

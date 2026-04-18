@@ -1,30 +1,37 @@
 #!/bin/bash
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=6
-#SBATCH --mem=48G
-#SBATCH --time=11:59:00
-#SBATCH --account=rrg-lplevass
-#SBATCH --gres=gpu:1
 #SBATCH --job-name=silo_rg_sd15
-#SBATCH --output=/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/SILO/logs/slurm_%j.out
-#SBATCH --error=/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/SILO/logs/slurm_%j.err
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=12
+#SBATCH --time=0:50:00
+#SBATCH --gpus-per-node=1
+#SBATCH --account=ynx@v100
+#SBATCH -C v100-32g
+#SBATCH --output=./logs/silo_rg_sd15_slurm_%j.out
+#SBATCH --error=./logs/silo_rg_sd15_slurm_%j.err
 #SBATCH --mail-user="sammy.sharief@umontreal.ca"
 #SBATCH --mail-type=ALL
 
 set -euo pipefail
 
-SILO_ROOT="/home/sammys15/links/scratch/Latent_Posterior_Sampling_Method_Comparsion/SILO"
-# mkdir -p "$SILO_ROOT/logs"
+SILO_ROOT="/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO"
+mkdir -p "$SILO_ROOT/logs"
 
 module purge
-module load python/3.11
+
+# only keep system-level GPU/compiler tools if needed
 module load gcc
-module load arrow/23.0.1
 module load opencv
 module load ffmpeg
 
-# Reuse the original SILO env — dependencies are unchanged
-source "$HOME/links/scratch/SILO/silo_env/bin/activate"
+export PATH="/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/mamba/bin:$PATH"
+
+
+# ---- conda/mamba setup ----
+eval "$(mamba shell hook --shell bash)"
+mamba activate silo
+
+export HF_HOME="$SCRATCH/hf_cache"
+mkdir -p "$HF_HOME"
 
 export PYTHONUNBUFFERED=1
 export WANDB_MODE=offline

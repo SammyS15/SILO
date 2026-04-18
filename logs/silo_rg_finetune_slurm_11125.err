@@ -1,0 +1,38 @@
+Loading opencv/4.5.4-cuda
+  Loading requirement: cuda/11.2
+/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/kornia/feature/lightglue.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @torch.cuda.amp.custom_fwd(cast_inputs=torch.float32)
+Loading pipeline components...:   0%|                                                                                  | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  17%|████████████▎                                                             | 1/6 [00:00<00:01,  3.43it/s]Loading pipeline components...:  33%|████████████████████████▋                                                 | 2/6 [00:01<00:03,  1.08it/s]Loading pipeline components...:  50%|█████████████████████████████████████                                     | 3/6 [00:09<00:11,  3.87s/it]Loading pipeline components...:  83%|█████████████████████████████████████████████████████████████▋            | 5/6 [00:09<00:01,  1.76s/it]Loading pipeline components...: 100%|██████████████████████████████████████████████████████████████████████████| 6/6 [00:09<00:00,  1.56s/it]
+Traceback (most recent call last):
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/training/silo_rg_train.py", line 708, in <module>
+    main(args)
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/training/silo_rg_train.py", line 595, in main
+    config, diffusion_extractor, aggregation_network = train_helpers.load_models(args.config_path)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/training/train_helpers.py", line 44, in load_models
+    diffusion_extractor = DiffusionExtractor(config, device)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/training/../dhf/diffusion_extractor.py", line 39, in __init__
+    self.model, self.dtype = rg_helpers.load_pipeline({"model_path": self.model_id}, device, dtype=self.dtype)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/training/../readout_guidance/rg_helpers.py", line 46, in load_pipeline
+    pipeline = StableDiffusionXLPipeline.from_pretrained(config["model_path"], torch_dtype=dtype).to(device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/diffusers/pipelines/pipeline_utils.py", line 418, in to
+    module.to(device, dtype)
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1174, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/torch/nn/modules/module.py", line 780, in _apply
+    module._apply(fn)
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/torch/nn/modules/module.py", line 780, in _apply
+    module._apply(fn)
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/torch/nn/modules/module.py", line 805, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1160, in convert
+    return t.to(
+           ^^^^^
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/torch/cuda/__init__.py", line 305, in _lazy_init
+    raise AssertionError("Torch not compiled with CUDA enabled")
+AssertionError: Torch not compiled with CUDA enabled
