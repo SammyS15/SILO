@@ -42,7 +42,7 @@ export HF_DATASETS_CACHE="/lustre/fswork/projects/rech/ynx/uxl64xr/datasets/hf_c
 
 cd "$SILO_ROOT/training"
 
-TASK_CONFIG="${TASK_CONFIG:-../configs/gaussian_deblur_config.yaml}"
+TASK_CONFIG="${TASK_CONFIG:-../configs/latino_pro_inpainting_config.yaml}"
 DATASET="${DATASET:-ffhq}"
 DATASET_PATH="${DATASET_PATH:-/lustre/fswork/projects/rech/ynx/uxl64xr/datasets/ffhq-hf}"
 NOTES="${NOTES:-rg_sd15_scratch}"

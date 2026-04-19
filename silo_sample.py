@@ -398,7 +398,9 @@ def main():
             cond_inpaint=doing_conditional_inpaint
         )
         pipe.dps_sampler = PosteriorSampling(operator=None, noiser=noiser, scale=args.scale)
-        pipe.aggregation_network.load_state_dict(...)
+        # pipe.aggregation_network.load_state_dict(...)
+        pipe.aggregation_network.load_state_dict(torch.load(args.start_from_ckpt, weights_only=False)['aggregation_network'], strict=True)
+        pipe.aggregation_network = pipe.aggregation_network.to("cuda")
     else:
         raise NotImplemented("choose a model that exists")
         
@@ -490,8 +492,9 @@ def main():
             #the reconstruction pipeline
             start_time = time.time()
             set_seeds(args.seed + sample_idx, deterministic=args.deterministic)
-            image = pipe(args.prompt, negative_prompt=args.negative_prompt, #prompt and negative prompt
-                          guidance_scale=args.cfg, height=args.resolution, width=args.resolution,num_inference_steps=args.steps, #regular LDM args
+            image = pipe(args.prompt, negative_prompt=args.negative_prompt,
+                          guidance_scale=args.cfg, height=args.resolution,
+                         width=args.resolution,num_inference_steps=args.steps, #regular LDM args
                           do_dps=True, w=w.clone(),
                           sampling_args=args, cond_inpaint=cond_inpaint
                         ).images[0]
