@@ -1,0 +1,6 @@
+Running normally
+diff_model = sd1.5
+pretrained_model_name_or_path = /lustre/fswork/projects/rech/ynx/uxl64xr/models/sd15
+[DEBUG] sigma_condition=True, model=rg
+Using output head with 4 channels
+Using output head with 4 channels

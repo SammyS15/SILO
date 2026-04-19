@@ -1,0 +1,6 @@
+Loading opencv/4.5.4-cuda
+  Loading requirement: cuda/11.2
+/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/kornia/feature/lightglue.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @torch.cuda.amp.custom_fwd(cast_inputs=torch.float32)
+Loading pipeline components...:   0%|                                                                                             | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  33%|████████████████████████████▎                                                        | 2/6 [00:00<00:00, 12.71it/s]Loading pipeline components...:  67%|████████████████████████████████████████████████████████▋                            | 4/6 [00:00<00:00,  5.33it/s]Loading pipeline components...:  83%|██████████████████████████████████████████████████████████████████████▊              | 5/6 [00:01<00:00,  3.97it/s]Loading pipeline components...: 100%|█████████████████████████████████████████████████████████████████████████████████████| 6/6 [00:01<00:00,  5.10it/s]
+slurmstepd: error: *** JOB 13677 ON r7i4n3 CANCELLED AT 2026-04-18T21:40:31 ***

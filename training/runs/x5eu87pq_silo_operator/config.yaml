@@ -1,0 +1,54 @@
+model_id: /lustre/fswork/projects/rech/ynx/uxl64xr/models/sd15
+diffusion_mode: generation
+num_timesteps: 1000
+save_timestep:
+- 0
+prompt: ''
+negative_prompt: ''
+guidance_scale: -1
+dtype: torch.float32
+projection_dim: 384
+aggregation_kwargs:
+  use_output_head: true
+  output_head_channels: 4
+  bottleneck_sequential: false
+  output_head_act: false
+  learnable_kernel: false
+  sigma_condition: true
+  sigma_condition_2: false
+  cond_inpaint: false
+weight_decay: 0
+max_steps: 30000
+val_every_n_steps: 1000
+log_max: 10
+lr: 0.0002
+low_memory: false
+dataset_args:
+  control_type: pose
+  sparse_loss: false
+  control_range:
+  - -1.0
+  - 1.0
+wandb_kwargs:
+  entity: null
+  project: silo_operator_training
+  name: silo_operator
+results_folder: runs
+save_model_steps: 500
+clamp: false
+output_resolution: 64
+load_resolution: 512
+id: x5eu87pq_silo_operator
+dims:
+- 1280
+- 1280
+- 1280
+- 1280
+- 1280
+- 1280
+- 640
+- 640
+- 640
+- 320
+- 320
+- 320

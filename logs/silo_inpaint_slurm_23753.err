@@ -1,0 +1,13 @@
+Loading opencv/4.5.4-cuda
+  Loading requirement: cuda/11.2
+/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/kornia/feature/lightglue.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @torch.cuda.amp.custom_fwd(cast_inputs=torch.float32)
+Loading pipeline components...:   0%|                                                                 | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  33%|███████████████████                                      | 2/6 [00:00<00:00,  5.58it/s]Loading pipeline components...:  83%|███████████████████████████████████████████████▌         | 5/6 [00:07<00:01,  1.66s/it]Loading pipeline components...: 100%|█████████████████████████████████████████████████████████| 6/6 [00:09<00:00,  1.65s/it]Loading pipeline components...: 100%|█████████████████████████████████████████████████████████| 6/6 [00:09<00:00,  1.50s/it]
+Traceback (most recent call last):
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/silo_sample.py", line 656, in <module>
+    main()
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/silo_sample.py", line 401, in main
+    pipe.aggregation_network.load_state_dict(...)
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/torch/nn/modules/module.py", line 2525, in load_state_dict
+    raise TypeError(
+TypeError: Expected state_dict to be dict-like, got <class 'ellipsis'>.

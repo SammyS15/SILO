@@ -4,3 +4,5 @@ trained_ckpt/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+training/wandb/
+core-python-*

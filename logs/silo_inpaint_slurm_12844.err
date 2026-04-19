@@ -1,0 +1,39 @@
+Loading opencv/4.5.4-cuda
+  Loading requirement: cuda/11.2
+/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/kornia/feature/lightglue.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @torch.cuda.amp.custom_fwd(cast_inputs=torch.float32)
+Loading pipeline components...:   0%|                                                                                             | 0/6 [00:00<?, ?it/s]Loading pipeline components...:  33%|████████████████████████████▎                                                        | 2/6 [00:00<00:00, 19.76it/s]Loading pipeline components...:  67%|████████████████████████████████████████████████████████▋                            | 4/6 [00:08<00:04,  2.37s/it]Loading pipeline components...:  83%|██████████████████████████████████████████████████████████████████████▊              | 5/6 [00:09<00:02,  2.05s/it]Loading pipeline components...: 100%|█████████████████████████████████████████████████████████████████████████████████████| 6/6 [00:09<00:00,  1.57s/it]
+Traceback (most recent call last):
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/silo_sample.py", line 639, in <module>
+    main()
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/silo_sample.py", line 363, in main
+    pipe.aggregation_network.load_state_dict(torch.load(args.start_from_ckpt,weights_only=False)['aggregation_network'], strict=True)
+  File "/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/silo/lib/python3.11/site-packages/torch/nn/modules/module.py", line 2593, in load_state_dict
+    raise RuntimeError(
+RuntimeError: Error(s) in loading state_dict for AggregationNetwork:
+	Unexpected key(s) in state_dict: "sigma_emb_norm.weight", "sigma_emb_norm.bias", "sigma_emb_linear.weight", "sigma_emb_linear.bias". 
+	size mismatch for bottleneck_layers.0.shortcut.weight: copying a param with shape torch.Size([384, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.0.conv1.weight: copying a param with shape torch.Size([96, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.1.shortcut.weight: copying a param with shape torch.Size([384, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.1.conv1.weight: copying a param with shape torch.Size([96, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.2.shortcut.weight: copying a param with shape torch.Size([384, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.2.conv1.weight: copying a param with shape torch.Size([96, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.3.shortcut.weight: copying a param with shape torch.Size([384, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.3.conv1.weight: copying a param with shape torch.Size([96, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.4.shortcut.weight: copying a param with shape torch.Size([384, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.4.conv1.weight: copying a param with shape torch.Size([96, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.5.shortcut.weight: copying a param with shape torch.Size([384, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.5.conv1.weight: copying a param with shape torch.Size([96, 1281, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 1280, 1, 1]).
+	size mismatch for bottleneck_layers.6.shortcut.weight: copying a param with shape torch.Size([384, 641, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 640, 1, 1]).
+	size mismatch for bottleneck_layers.6.conv1.weight: copying a param with shape torch.Size([96, 641, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 640, 1, 1]).
+	size mismatch for bottleneck_layers.7.shortcut.weight: copying a param with shape torch.Size([384, 641, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 640, 1, 1]).
+	size mismatch for bottleneck_layers.7.conv1.weight: copying a param with shape torch.Size([96, 641, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 640, 1, 1]).
+	size mismatch for bottleneck_layers.8.shortcut.weight: copying a param with shape torch.Size([384, 641, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 640, 1, 1]).
+	size mismatch for bottleneck_layers.8.conv1.weight: copying a param with shape torch.Size([96, 641, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 640, 1, 1]).
+	size mismatch for bottleneck_layers.9.shortcut.weight: copying a param with shape torch.Size([384, 321, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 320, 1, 1]).
+	size mismatch for bottleneck_layers.9.conv1.weight: copying a param with shape torch.Size([96, 321, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 320, 1, 1]).
+	size mismatch for bottleneck_layers.10.shortcut.weight: copying a param with shape torch.Size([384, 321, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 320, 1, 1]).
+	size mismatch for bottleneck_layers.10.conv1.weight: copying a param with shape torch.Size([96, 321, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 320, 1, 1]).
+	size mismatch for bottleneck_layers.11.shortcut.weight: copying a param with shape torch.Size([384, 321, 1, 1]) from checkpoint, the shape in current model is torch.Size([384, 320, 1, 1]).
+	size mismatch for bottleneck_layers.11.conv1.weight: copying a param with shape torch.Size([96, 321, 1, 1]) from checkpoint, the shape in current model is torch.Size([96, 320, 1, 1]).
+	size mismatch for output_head.0.weight: copying a param with shape torch.Size([128, 385, 3, 3]) from checkpoint, the shape in current model is torch.Size([128, 384, 3, 3]).

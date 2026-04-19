@@ -1,0 +1,4 @@
+Running normally
+diff_model = rv
+pretrained_model_name_or_path = /lustre/fsn1/projects/rech/ynx/uxl64xr/hf_cache/models/realistic-vision-v51
+Using output head with 4 channels

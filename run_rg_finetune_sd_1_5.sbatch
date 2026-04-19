@@ -40,19 +40,7 @@ export HF_HOME=/lustre/fsn1/projects/rech/ynx/uxl64xr/hf_cache
 export TORCH_HOME=/lustre/fsn1/projects/rech/ynx/uxl64xr/torch_cache
 export HF_DATASETS_CACHE="/lustre/fswork/projects/rech/ynx/uxl64xr/datasets/hf_cache"
 
-
 cd "$SILO_ROOT/training"
-
-# ---------------------------------------------------------------------------
-# Train the RG operator from scratch on SD 1.5.
-#
-# Override via env vars, e.g.:
-#   TASK_CONFIG=../configs/super_resolution_4_config.yaml DATASET=ffhq sbatch run_rg_finetune_sd_1_5.sbatch
-#
-# No --start_from_ckpt: existing operators were trained on RV5.1 features;
-# SD 1.5 UNet internals differ enough that warm-starting would be misleading.
-# Training from scratch takes ~30 000 steps (~2-3 h on a single GPU).
-# ---------------------------------------------------------------------------
 
 TASK_CONFIG="${TASK_CONFIG:-../configs/gaussian_deblur_config.yaml}"
 DATASET="${DATASET:-ffhq}"
