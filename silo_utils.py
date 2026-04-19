@@ -346,7 +346,13 @@ class VaeWrapper:
     '''
     def __init__(self, vae = None, type = None, pretrained_model_name_or_path= None):
         self.init_constants()
-        if (vae is None) and (type is None) and ( pretrained_model_name_or_path is not None):
+        if (vae is None) and (type is not None) and (pretrained_model_name_or_path is not None):
+            # path + type both provided: load from path, use given type
+            self.vae = AutoencoderKL.from_pretrained(pretrained_model_name_or_path, subfolder="vae").to("cuda")
+            self.vae.requires_grad_(False)
+            self.pretrained_model_name_or_path = pretrained_model_name_or_path
+            self.type = type
+        elif (vae is None) and (type is None) and ( pretrained_model_name_or_path is not None):
             #in case we got only pretrained_model_name_or_path
             self.vae = AutoencoderKL.from_pretrained(pretrained_model_name_or_path, subfolder="vae").to("cuda")
             self.vae.requires_grad_(False)
@@ -761,6 +767,8 @@ class StableDiffusionPipeline(
         
     ):
         super().__init__()
+        print(f"[DEBUG] sigma_condition={sigma_condition}, model={sampling_args.model if sampling_args else None}")
+
 
         self.dps_sampler = PosteriorSampling(operator=None, noiser=None)
         if sampling_args.model=="rg":

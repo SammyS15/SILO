@@ -39,7 +39,7 @@ from torchvision.transforms.functional import to_pil_image , to_tensor , normali
 from torchvision.transforms import InterpolationMode
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
-from datasets import load_from_disk
+from datasets import load_from_disk, load_dataset
 device = "cuda"
 
 def parse_args():
@@ -74,6 +74,12 @@ def parse_args():
             " dataset). It can also be a path pointing to a local copy of a dataset in your filesystem,"
             " or to a folder containing files that 🤗 Datasets can understand."
         ),
+    )
+    parser.add_argument(
+        "--dataset_path",
+        type=str,
+        default=None,
+        help="Override the hardcoded dataset path. Pass the local path to the HuggingFace dataset directory.",
     )
     
     parser.add_argument(
@@ -613,15 +619,40 @@ def main(args):
     in the end, you just need to have a variable named: "dataset:
     which is a huggingface dataset object, where dataset["image"] returns a list of PIL images.
     '''
+    _default_paths = {
+        "coco": "data/coco/",
+        "ffhq": "/home/ronraphaeli/my_datasets/ffhq512",
+        "LSDIR": "/home/ronraphaeli/my_datasets/LSDIR/",
+    }
+    dataset_path = args.dataset_path if args.dataset_path is not None else _default_paths.get(args.dataset_name)
+    if dataset_path is None:
+        raise ValueError(f"Unknown dataset '{args.dataset_name}' and no --dataset_path provided.")
+
+    cache_dir = args.cache_dir or os.environ.get("HF_DATASETS_CACHE")
+
+    def _load_dataset(path):
+        """Load a HuggingFace dataset: arrow (save_to_disk), parquet (Hub download), or imagefolder."""
+        # Arrow format (save_to_disk)
+        if os.path.isfile(os.path.join(path, "dataset_info.json")):
+            return load_from_disk(path)
+        # Parquet format (Hub snapshot_download)
+        parquet_files = sorted(glob.glob(os.path.join(path, "data", "*.parquet")))
+        if not parquet_files:
+            parquet_files = sorted(glob.glob(os.path.join(path, "*.parquet")))
+        if parquet_files:
+            return load_dataset("parquet", data_files=parquet_files, split="train", cache_dir=cache_dir)
+        # Raw image directory
+        return load_dataset("imagefolder", data_dir=path, split="train", cache_dir=cache_dir)
+
     if args.dataset_name == "coco":
-        dataset = load_from_disk("data/coco/")
+        dataset = _load_dataset(dataset_path)
     elif args.dataset_name == "ffhq":
-        dataset = load_from_disk("/home/ronraphaeli/my_datasets/ffhq512")
+        dataset = _load_dataset(dataset_path)
         dataset = dataset.train_test_split(train_size=1000,shuffle=False)
         val_dataset = dataset["train"] #this is actually the validation
         dataset = dataset["test"] #this is actually the train
     elif args.dataset_name == "LSDIR":
-        dataset = load_from_disk("/home/ronraphaeli/my_datasets/LSDIR/")
+        dataset = _load_dataset(dataset_path)
         val_dataset = dataset["validation"]
         dataset = dataset["train"]
  
@@ -690,12 +721,6 @@ def main(args):
     config["dims"] = diffusion_extractor.dims
 
 
-    import sys
-    import os
-
-    # Get the current working directory to ensure you know where you're starting
-    current_dir = os.getcwd()
-    print("Current directory:", current_dir)
     denoiser = None
     train(config, diffusion_extractor, aggregation_network, optimizer, train_dataloader, val_dataloader,args,denoiser)
 

@@ -29,8 +29,8 @@ export PATH="/lustre/fsn1/projects/rech/ynx/uxl64xr/conda_envs/mamba/bin:$PATH"
 eval "$(mamba shell hook --shell bash)"
 mamba activate silo
 
-export HF_HOME="$SCRATCH/hf_cache"
-mkdir -p "$HF_HOME"
+# export HF_HOME="$SCRATCH/hf_cache"
+# mkdir -p "$HF_HOME"
 
 export PYTHONUNBUFFERED=1
 

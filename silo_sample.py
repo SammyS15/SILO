@@ -341,9 +341,8 @@ def main():
     print("pretrained_model_name_or_path =", args.pretrained_model_name_or_path)
     # vae_wrapper = VaeWrapper(pretrained_model_name_or_path=args.pretrained_model_name_or_path,type=args.diff_model)
     vae_wrapper = VaeWrapper(
-        vae=None,
-        type=None,
-        pretrained_model_name_or_path=args.pretrained_model_name_or_path
+        pretrained_model_name_or_path=args.pretrained_model_name_or_path,
+        type=args.diff_model
     )
     vae_type = vae_wrapper.get_vae_type()
     num_latent_channels = vae_wrapper.get_num_latent_channels()
@@ -359,30 +358,47 @@ def main():
     else:
         raise NotImplemented("choose pipe")
     
+    # if args.model == "rg":
+    #     pipe.dps_sampler = PosteriorSampling(operator=None, noiser=noiser,scale=args.scale)
+    #     pipe.aggregation_network.load_state_dict(torch.load(args.start_from_ckpt,weights_only=False)['aggregation_network'], strict=True)
+    #     pipe.aggregation_network = pipe.aggregation_network.to("cuda")
+    #     pipe.aggregation_network.eval()
+    # elif args.model == "cnn":
+    #     model = DegradationModel(num_latent_channels,layer_norm=True,sigma_condition=args.sigma_condition)
+    #     model.load_state_dict(torch.load(args.start_from_ckpt, weights_only=False),strict=True)
+    #     model = model.to(device)
+    #     model.eval()
+    #     pipe.dps_sampler = PosteriorSampling(operator=model, noiser=noiser,scale=args.scale)
+    # elif args.model == "preserve_LatentDegradationNetwork":
+    #     from preserve_LatentDegradationNetwork import LatentDegradationNetwork
+    #     model = LatentDegradationNetwork(
+    #         in_channels=4,
+    #         out_channels=4,
+    #         base_channels=48,  
+    #         num_blocks=3,
+    #         max_noise=0.1
+    #         )
+    #     model.load_state_dict(torch.load(args.start_from_ckpt, weights_only=False),strict=True)
+    #     model = model.to(device)
+    #     model.eval()
+    #     pipe.dps_sampler = PosteriorSampling(operator=model, noiser=noiser,scale=args.scale)
     if args.model == "rg":
-        pipe.dps_sampler = PosteriorSampling(operator=None, noiser=noiser,scale=args.scale)
-        pipe.aggregation_network.load_state_dict(torch.load(args.start_from_ckpt,weights_only=False)['aggregation_network'], strict=True)
-        pipe.aggregation_network = pipe.aggregation_network.to("cuda")
-        pipe.aggregation_network.eval()
-    elif args.model == "cnn":
-        model = DegradationModel(num_latent_channels,layer_norm=True,sigma_condition=args.sigma_condition)
-        model.load_state_dict(torch.load(args.start_from_ckpt, weights_only=False),strict=True)
-        model = model.to(device)
-        model.eval()
-        pipe.dps_sampler = PosteriorSampling(operator=model, noiser=noiser,scale=args.scale)
-    elif args.model == "preserve_LatentDegradationNetwork":
-        from preserve_LatentDegradationNetwork import LatentDegradationNetwork
-        model = LatentDegradationNetwork(
-            in_channels=4,
-            out_channels=4,
-            base_channels=48,  
-            num_blocks=3,
-            max_noise=0.1
-            )
-        model.load_state_dict(torch.load(args.start_from_ckpt, weights_only=False),strict=True)
-        model = model.to(device)
-        model.eval()
-        pipe.dps_sampler = PosteriorSampling(operator=model, noiser=noiser,scale=args.scale)
+        from dhf import aggregation_network as aggnet
+        pipe.aggregation_network = aggnet.AggregationNetwork(
+            projection_dim=384,
+            feature_dims=[1280,1280,1280,1280,1280,1280,640,640,640,320,320,320],
+            device="cuda",
+            save_timestep=[0],
+            num_timesteps=1000,
+            use_output_head=True,
+            output_head_channels=4,
+            output_head_act=False,
+            bottleneck_sequential=False,
+            sigma_condition=args.sigma_condition,
+            cond_inpaint=doing_conditional_inpaint
+        )
+        pipe.dps_sampler = PosteriorSampling(operator=None, noiser=noiser, scale=args.scale)
+        pipe.aggregation_network.load_state_dict(...)
     else:
         raise NotImplemented("choose a model that exists")
         

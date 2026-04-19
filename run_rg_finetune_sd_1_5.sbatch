@@ -2,7 +2,7 @@
 #SBATCH --job-name=silo_rg_sd15
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=12
-#SBATCH --time=0:50:00
+#SBATCH --time=10:50:00
 #SBATCH --gpus-per-node=1
 #SBATCH --account=ynx@v100
 #SBATCH -C v100-32g
@@ -11,7 +11,7 @@
 #SBATCH --mail-user="sammy.sharief@umontreal.ca"
 #SBATCH --mail-type=ALL
 
-set -euo pipefail
+# set -eo pipefail
 
 SILO_ROOT="/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO"
 mkdir -p "$SILO_ROOT/logs"
@@ -36,6 +36,11 @@ mkdir -p "$HF_HOME"
 export PYTHONUNBUFFERED=1
 export WANDB_MODE=offline
 
+export HF_HOME=/lustre/fsn1/projects/rech/ynx/uxl64xr/hf_cache
+export TORCH_HOME=/lustre/fsn1/projects/rech/ynx/uxl64xr/torch_cache
+export HF_DATASETS_CACHE="/lustre/fswork/projects/rech/ynx/uxl64xr/datasets/hf_cache"
+
+
 cd "$SILO_ROOT/training"
 
 # ---------------------------------------------------------------------------
@@ -51,12 +56,14 @@ cd "$SILO_ROOT/training"
 
 TASK_CONFIG="${TASK_CONFIG:-../configs/gaussian_deblur_config.yaml}"
 DATASET="${DATASET:-ffhq}"
+DATASET_PATH="${DATASET_PATH:-/lustre/fswork/projects/rech/ynx/uxl64xr/datasets/ffhq-hf}"
 NOTES="${NOTES:-rg_sd15_scratch}"
 
 python silo_rg_train.py \
   --config_path=train_rg_silo_config.yaml \
   --task_config="$TASK_CONFIG" \
   --dataset_name="$DATASET" \
+  --dataset_path="$DATASET_PATH" \
   --train_batch_size=4 \
   --train_with_noise \
   --l1_loss \

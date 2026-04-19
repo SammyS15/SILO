@@ -77,7 +77,7 @@ class DiffusionExtractor:
         if batch_size is None:
             batch_size = self.batch_size
         with torch.no_grad():
-            if "xl" in self.model_id:
+            if hasattr(self.model, 'tokenizer_2') and self.model.tokenizer_2 is not None:
                 context, added_cond_kwargs = rg_helpers.get_context_sdxl(
                     self.model,
                     [prompt] * batch_size,
