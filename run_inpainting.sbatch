@@ -2,7 +2,7 @@
 #SBATCH --job-name=silo_inpaint
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=12
-#SBATCH --time=0:50:00
+#SBATCH --time=12:00:00
 #SBATCH --gpus-per-node=1
 #SBATCH --account=ynx@v100
 #SBATCH -C v100-32g
@@ -43,7 +43,7 @@ export HF_DATASETS_CACHE="/lustre/fswork/projects/rech/ynx/uxl64xr/datasets/hf_c
 cd "$SILO_ROOT"
 
 python silo_sample.py \
-  --start_from_ckpt=/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/training/runs/ehclve3m_silo_operator/ckpts/checkpoint_step_30000.pt \
+  --start_from_ckpt=/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO/training/runs/7pumca5l_silo_operator/ckpts/checkpoint_step_30000.pt \
     --pretrained_model_name_or_path=/lustre/fswork/projects/rech/ynx/uxl64xr/models/sd15 \
     --diff_model=sd1.5 \
   --task_config=configs/latino_pro_inpainting_config.yaml \
@@ -56,4 +56,4 @@ python silo_sample.py \
   --save_mode=both \
   --folder_path=./sample_results/inpainting_apt \
   --disable_bar \
-  --num_samples=1
+  --num_samples=100

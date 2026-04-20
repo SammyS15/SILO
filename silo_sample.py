@@ -569,6 +569,12 @@ def main():
             sample_tensors.append(image_tensor_normed[0].detach().cpu())
             sample_y_tensors.append(image_tensor_y[0].detach().cpu())
 
+            # Save raw tensor [-1,1] alongside PNG for cross-method comparison.
+            _pt_samples_dir = os.path.join(args.folder_path, "samples")
+            os.makedirs(_pt_samples_dir, exist_ok=True)
+            torch.save(image_tensor_normed[0].detach().cpu(),
+                       os.path.join(_pt_samples_dir, f"{sample_file_name}.pt"))
+
         # aggregate summary across all samples for this image
         if args.num_samples > 1:
             import numpy as np
@@ -608,6 +614,14 @@ def main():
 
             stacked   = torch.stack(sample_tensors)    # [N, 3, H, W] in [-1, 1]
             stacked_y = torch.stack(sample_y_tensors)  # [N, 3, H, W]
+
+            # Save shared reference tensors for cross-method comparison.
+            _shared_dir = os.path.join(args.folder_path, "shared")
+            os.makedirs(_shared_dir, exist_ok=True)
+            torch.save(x[0].detach().cpu(),  os.path.join(_shared_dir, "gt.pt"))
+            torch.save(y[0].detach().cpu(),  os.path.join(_shared_dir, "yn.pt"))
+            if measure_config['operator']['name'] == 'inpainting':
+                torch.save(inpaint_mask[0].detach().cpu(), os.path.join(_shared_dir, "mask.pt"))
 
             # 1. Mean image
             mean_tensor = stacked.mean(dim=0)  # [3, H, W]
@@ -657,5 +671,3 @@ def main():
     
 if __name__ == "__main__":
     main()
-
-        
