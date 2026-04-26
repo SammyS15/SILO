@@ -12,7 +12,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # ── Parameters (override via env vars) ───────────────────────────────────────
-IMAGE_DIR="${IMAGE_DIR:-/lustre/fsn1/projects/rech/ynx/uxl64xr/latent_model_test_images}"
+# IMAGE_DIR="${IMAGE_DIR:-/lustre/fsn1/projects/rech/ynx/uxl64xr/latent_model_test_images}"
+IMAGE_DIR="${IMAGE_DIR:-/lustre/fsn1/projects/rech/ynx/uxl64xr/Images_Posterior_Method_Test_512}"
 SILO_ROOT="${SILO_ROOT:-/lustre/fsn1/projects/rech/ynx/uxl64xr/SILO}"
 CKPT="${CKPT:-$SILO_ROOT/training/runs/7pumca5l_silo_operator/ckpts/checkpoint_step_30000.pt}"
 PRETRAINED="${PRETRAINED:-/lustre/fswork/projects/rech/ynx/uxl64xr/models/sd15}"
