@@ -1469,7 +1469,7 @@ class StableDiffusionPipeline(
                 "not-safe-for-work" (nsfw) content.
         """
 
-        set_seeds(sampling_args.seed)
+        #set_seeds(sampling_args.seed)
         callback = kwargs.pop("callback", None)
         callback_steps = kwargs.pop("callback_steps", None)
 
